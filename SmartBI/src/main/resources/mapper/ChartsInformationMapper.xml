@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.user.center.example.usercenter.mapper.ChartsInformationMapper">
+    <insert id="InsertChartInformation">
+        insert into intelligentbi.chartsinformation_${userId}(UserName,UserId,ChartName,AnalysisAim,ChartType,FileInformation,ChartCode,ChartAnalysis)
+            value(#{userName},#{userId},#{chartName},#{analysisAim},#{chartType},#{fileInformation},#{chartCode},#{chartAnalysis});
+    </insert>
+
+    <insert id="InsertChartInformationOver">
+        insert into intelligentbi.chartsinformation_${userId}(UserName,UserId,ChartName,AnalysisAim,ChartType,FileInformation,ChartCode,ChartAnalysis,ChartStatus)
+            value(#{userName},#{userId},#{chartName},#{analysisAim},#{chartType},#{fileInformation},#{chartCode},#{chartAnalysis},#{chartStatus});
+    </insert>
+    <update id="UpdateChartsInformationWhenOver">
+        update intelligentbi.chartsinformation_${userId} set ChartCode = #{chartCode} ,ChartAnalysis = #{chartAnalysis} , ChartStatus = 1 where Id = #{id}
+    </update>
+    <update id="DeleteById">
+        update intelligentbi.chartsinformation_${userId} set IsDelete = 1 where Id = #{dataId}
+    </update>
+
+    <select id="SelectUserChartsInformation" resultType="com.user.center.example.usercenter.model.domain.ChartsInformation">
+            select * from intelligentbi.chartsinformation_${userId} where IsDelete = 1
+    </select>
+    <select id="CreateUserChartsInformation" resultType="com.user.center.example.usercenter.model.domain.ChartsInformation">
+        create table intelligentbi.chartsinformation_${userId}
+        (
+            Id              bigint auto_increment
+                primary key,
+            UserName    varchar(512)                       not null comment '创建表时的用户名',
+            UserId          bigint        not null,
+            FileInformation text          not null,
+            ChartName   varchar(512)                       not null comment '图标名称',
+            AnalysisAim varchar(1024)                      null,
+            ChartType   varchar(512)                       null,
+            ChartCode       text          not null,
+            CreateDate  datetime default CURRENT_TIMESTAMP null comment '自动添加',
+            ChartAnalysis   varchar(10240)                     not null,
+            IsDelete        int default 0 null comment '0-正常
+1-删除',
+            ChartStatus        int default 0 null comment '0-生成中
+1-生成完毕'
+        );
+    </select>
+
+<!--    检查表单是否已创建-->
+    <select id="CheckTablesIsExist" resultType="java.lang.String" >
+         SELECT TABLE_NAME FROM information_schema.tables WHERE table_schema = 'intelligentbi' AND TABLE_NAME = CONCAT('chartsinformation_', #{userId});
+    </select>
+<!--    获取表中所有数据-->
+    <select id="SelectAll" resultType="com.user.center.example.usercenter.model.domain.ChartsInformation">
+        select * from intelligentbi.chartsinformation_${userId} where IsDelete = 0
+    </select>
+
+    <select id="CheckId" resultType="com.user.center.example.usercenter.model.domain.ChartsInformation">
+        select * from intelligentbi.chartsinformation_${userId} where Id = #{id}
+    </select>
+
+    <select id="CountAll" resultType="int">
+        select count(*) from intelligentbi.chartsinformation_${userId}
+    </select>
+
+</mapper>

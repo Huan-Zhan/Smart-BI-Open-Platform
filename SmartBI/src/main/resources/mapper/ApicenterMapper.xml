@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.user.center.example.usercenter.mapper.ApicenterMapper">
+
+    <resultMap id="BaseResultMap" type="com.user.center.example.usercenter.model.domain.Apicenter">
+            <id property="ID" column="ID" jdbcType="BIGINT"/>
+            <result property="userName" column="UserName" jdbcType="VARCHAR"/>
+            <result property="userPassword" column="UserPassword" jdbcType="VARCHAR"/>
+            <result property="accessKey" column="AccessKey" jdbcType="VARCHAR"/>
+            <result property="secretKey" column="SecretKey" jdbcType="VARCHAR"/>
+            <result property="avatarUrl" column="AvatarUrl" jdbcType="VARCHAR"/>
+            <result property="phone" column="Phone" jdbcType="VARCHAR"/>
+            <result property="lastDate" column="LastDate" jdbcType="BIGINT"/>
+            <result property="noneNumber" column="NoneNumber" jdbcType="INTEGER"/>
+            <result property="isDelete" column="IsDelete" jdbcType="INTEGER"/>
+            <result property="gender" column="gender" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID,UserName,UserPassword,
+        AccessKey,SecretKey,AvatarUrl,
+        Phone,LastDate,NoneNumber,
+        IsDelete,gender
+    </sql>
+    <insert id="InsertOneUser">
+        insert into huanzhan.apicenter(UserName,UserPassword,AccessKey,SecretKey,LastDate,NoneNumber)
+        values(#{userName},#{userPassword},#{accessKey},#{secretKey},#{lastDate},#{noneNumber})
+    </insert>
+    <select id="CheckUserExist" resultType="com.user.center.example.usercenter.model.domain.Apicenter">
+        select * from huanzhan.apicenter  where UserName = #{userName}
+    </select>
+    <select id="countUserName" resultType="java.lang.Integer">
+        select count(*) from huanzhan.apicenter where UserName = #{UserName}
+    </select>
+</mapper>

@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: UserCenter
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+#    username: huanzhan
+    password: 123456
+#    url: jdbc:mysql://47.113.192.175:3306/huanzhan?userSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://localhost/intelligentbi?userSSL=false&serverTimezone=GMT%2B8
+  #配置 Mq
+  rabbitmq:
+    host: localhost
+#    host: 47.113.192.175
+    username: admin
+    password: 123456
+    port: 5672
+    connection-timeout: 1s  # 连接超时时间
+
+server:
+  port: 8080
+#  port: 8083
+  servlet:
+    context-path: /api
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+xinghuo:
+  ai:
+    client:
+      api-key: 59e7d2bed0d311cbf2dcd8100a744ae7
+      api-secret: NmIyM2FiMzFhNTdmMTdlZDhiYTI5MWQx
+      appid: 8857608d
+      host-url: wss://spark-api.xf-yun.com/v3.5/chat
